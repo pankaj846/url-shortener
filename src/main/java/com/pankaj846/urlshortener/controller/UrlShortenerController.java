@@ -1,33 +1,36 @@
 package com.pankaj846.urlshortener.controller;
 
 import com.pankaj846.urlshortener.entity.Url;
+import com.pankaj846.urlshortener.entity.UrlDto;
 import com.pankaj846.urlshortener.service.UrlShortenerService;
 import com.pankaj846.urlshortener.service.UrlShortenerServiceImpl;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
+import java.io.IOException;
+import java.net.URLDecoder;
 import java.util.Optional;
 
 @RestController
 public class UrlShortenerController {
 
     @Autowired
-    UrlShortenerServiceImpl urlShortenerService;
+    UrlShortenerService urlShortenerService;
 
-    @GetMapping("/url/id")
-    public Optional<Url> getUrlById(Long id){
-        return urlShortenerService.getUrlById(id);
+    @PostMapping("/urlshortener")
+    public UrlDto saveUrl(@Validated  @RequestBody UrlDto urlDto){
+        String originalUrl = urlDto.getOriginalUrl();
+        return urlShortenerService.createShortUrl(originalUrl);
     }
 
-    @PostMapping("/saveUrl")
-    public Url saveUrl(@Validated  @RequestBody Url url){
-        System.out.println(url.toString());
-        return urlShortenerService.saveUrl(url);
+    @GetMapping("/{shortUrl}")
+    public UrlDto getUrl(@PathVariable String shortUrl, HttpServletResponse httpServletResponse) throws IOException {
+        UrlDto originalUrl = urlShortenerService.getOriginalUrl(shortUrl);
+        httpServletResponse.sendRedirect(originalUrl.getOriginalUrl());
+        return null;
     }
 
 }

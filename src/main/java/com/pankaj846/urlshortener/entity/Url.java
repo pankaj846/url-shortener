@@ -24,16 +24,11 @@ public class Url {
     private Long id;
     private String originalUrl;
     private String shortUrl;
-
     private LocalDateTime createdDate;
 
-    @Override
-    public String toString() {
-        return "Url{" +
-                "id=" + id +
-                ", originalUrl='" + originalUrl + '\'' +
-                ", shortUrl='" + shortUrl + '\'' +
-                ", createdDate=" + createdDate +
-                '}';
+    public Url(String originalUrl, String shortUrl, LocalDateTime createdDate) {
+        this.originalUrl = originalUrl;
+        this.shortUrl = shortUrl;
+        this.createdDate = createdDate;
     }
 }
