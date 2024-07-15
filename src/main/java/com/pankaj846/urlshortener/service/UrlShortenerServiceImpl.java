@@ -16,7 +16,7 @@ public class UrlShortenerServiceImpl implements UrlShortenerService{
     @Autowired
     UrlRepository urlRepository;
 
-    public UrlDto createShortUrl(String originalUrl) {
+    public Url createShortUrl(String originalUrl) {
         LocalDateTime time = LocalDateTime.now();
 
         // use google hasing
@@ -24,13 +24,11 @@ public class UrlShortenerServiceImpl implements UrlShortenerService{
                 .hashString(originalUrl.concat(time.toString()), StandardCharsets.UTF_8)
                 .toString();
 
-        UrlDto urlDto = new UrlDto(originalUrl, shortUrl);
-
         // save to DB
         Url url = new Url(originalUrl, shortUrl, time);
         saveUrl(url);
 
-        return urlDto;
+        return url;
     }
 
     @Override
@@ -39,20 +37,13 @@ public class UrlShortenerServiceImpl implements UrlShortenerService{
     }
 
     @Override
-    public UrlDto getOriginalUrl(String shortUrl) {
-        Url url = urlRepository.findByShortUrl(shortUrl);
-        return convertUrlToUrlDto(url);
+    public Url getOriginalUrl(String shortUrl) {
+        return urlRepository.findByShortUrl(shortUrl);
     }
 
     @Override
     public void deleteShortUrl(String shortUrl) {
 
     }
-
-    private UrlDto convertUrlToUrlDto(Url url){
-        UrlDto urlDto = new UrlDto(url.getShortUrl(), url.getOriginalUrl());
-        return urlDto;
-    }
-
 
 }

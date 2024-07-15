@@ -1,18 +1,18 @@
 package com.pankaj846.urlshortener.controller;
 
+import com.pankaj846.urlshortener.entity.ErrorResponseDTO;
 import com.pankaj846.urlshortener.entity.Url;
 import com.pankaj846.urlshortener.entity.UrlDto;
 import com.pankaj846.urlshortener.service.UrlShortenerService;
-import com.pankaj846.urlshortener.service.UrlShortenerServiceImpl;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.HttpStatus;
 
 
 import java.io.IOException;
-import java.net.URLDecoder;
-import java.util.Optional;
 
 @RestController
 public class UrlShortenerController {
@@ -20,16 +20,26 @@ public class UrlShortenerController {
     @Autowired
     UrlShortenerService urlShortenerService;
 
-    @PostMapping("/urlshortener")
-    public UrlDto saveUrl(@Validated  @RequestBody UrlDto urlDto){
+    @PostMapping("/shorten")
+    public ResponseEntity<UrlDto> createShortUrl(@Validated  @RequestBody UrlDto urlDto){
         String originalUrl = urlDto.getOriginalUrl();
-        return urlShortenerService.createShortUrl(originalUrl);
+        Url url = urlShortenerService.createShortUrl(originalUrl);
+        UrlDto responseDto = new UrlDto(url.getShortUrl(), url.getOriginalUrl());
+        return new ResponseEntity<>(responseDto, HttpStatus.CREATED);
     }
 
     @GetMapping("/{shortUrl}")
-    public UrlDto getUrl(@PathVariable String shortUrl, HttpServletResponse httpServletResponse) throws IOException {
-        UrlDto originalUrl = urlShortenerService.getOriginalUrl(shortUrl);
-        httpServletResponse.sendRedirect(originalUrl.getOriginalUrl());
+    public ResponseEntity<ErrorResponseDTO> redirectUrl(@PathVariable String shortUrl, HttpServletResponse response) throws IOException {
+
+        // get Url object from DB
+        Url url = urlShortenerService.getOriginalUrl(shortUrl);
+        if(url == null){
+            ErrorResponseDTO errorResponseDto = new ErrorResponseDTO("Url not exist", 400);
+            return new ResponseEntity<ErrorResponseDTO>(errorResponseDto, HttpStatus.OK);
+
+        }
+
+        response.sendRedirect(url.getOriginalUrl());
         return null;
     }
 

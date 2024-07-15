@@ -10,11 +10,11 @@ import java.util.Optional;
 @Service
 public interface UrlShortenerService {
 
-    public UrlDto createShortUrl(String originalUrl);
+    public Url createShortUrl(String originalUrl);
 
     public Url saveUrl(Url url);
 
-    public UrlDto getOriginalUrl(String shortUrl);
+    public Url getOriginalUrl(String shortUrl);
 
     public void deleteShortUrl(String shortUrl);
 
