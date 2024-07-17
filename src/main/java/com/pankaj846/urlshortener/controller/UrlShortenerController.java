@@ -1,13 +1,13 @@
 package com.pankaj846.urlshortener.controller;
 
-import com.pankaj846.urlshortener.entity.ErrorResponseDTO;
-import com.pankaj846.urlshortener.entity.Url;
-import com.pankaj846.urlshortener.entity.UrlDto;
+import com.pankaj846.urlshortener.dto.ErrorResponseDTO;
+import com.pankaj846.urlshortener.model.Url;
+import com.pankaj846.urlshortener.dto.UrlDto;
 import com.pankaj846.urlshortener.service.UrlShortenerService;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
 
@@ -21,7 +21,7 @@ public class UrlShortenerController {
     UrlShortenerService urlShortenerService;
 
     @PostMapping("/shorten")
-    public ResponseEntity<UrlDto> createShortUrl(@Validated  @RequestBody UrlDto urlDto){
+    public ResponseEntity<UrlDto> createShortUrl(@Valid @RequestBody UrlDto urlDto){
         String originalUrl = urlDto.getOriginalUrl();
         Url url = urlShortenerService.createShortUrl(originalUrl);
         UrlDto responseDto = new UrlDto(url.getShortUrl(), url.getOriginalUrl());

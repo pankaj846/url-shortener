@@ -1,4 +1,4 @@
-package com.pankaj846.urlshortener.entity;
+package com.pankaj846.urlshortener.model;
 
 
 import jakarta.persistence.Entity;

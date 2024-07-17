@@ -1,6 +1,6 @@
 package com.pankaj846.urlshortener.repository;
 
-import com.pankaj846.urlshortener.entity.Url;
+import com.pankaj846.urlshortener.model.Url;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

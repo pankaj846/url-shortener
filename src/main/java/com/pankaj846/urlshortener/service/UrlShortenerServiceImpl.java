@@ -1,8 +1,7 @@
 package com.pankaj846.urlshortener.service;
 
 import com.google.common.hash.Hashing;
-import com.pankaj846.urlshortener.entity.Url;
-import com.pankaj846.urlshortener.entity.UrlDto;
+import com.pankaj846.urlshortener.model.Url;
 import com.pankaj846.urlshortener.repository.UrlRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

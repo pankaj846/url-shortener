@@ -1,10 +1,7 @@
 package com.pankaj846.urlshortener.service;
 
-import com.pankaj846.urlshortener.entity.Url;
-import com.pankaj846.urlshortener.entity.UrlDto;
+import com.pankaj846.urlshortener.model.Url;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 
 @Service
