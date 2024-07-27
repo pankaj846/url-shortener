@@ -20,6 +20,7 @@ public class UrlShortenerController {
     @Autowired
     UrlShortenerService urlShortenerService;
 
+    @CrossOrigin(origins = "*")
     @PostMapping("/shorten")
     public ResponseEntity<UrlDto> createShortUrl(@Valid @RequestBody UrlDto urlDto){
         String originalUrl = urlDto.getOriginalUrl();
@@ -28,6 +29,7 @@ public class UrlShortenerController {
         return new ResponseEntity<>(responseDto, HttpStatus.CREATED);
     }
 
+    @CrossOrigin(origins = "*")
     @GetMapping("/{shortUrl}")
     public ResponseEntity<ErrorResponseDTO> redirectUrl(@PathVariable String shortUrl, HttpServletResponse response) throws IOException {
 
