@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Shortener</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>URL Shortener</h1>
+        <form id="urlForm">
+            <label for="originalUrl">Enter URL to shorten:</label>
+            <input type="text" id="originalUrl" name="originalUrl" required>
+            <button type="submit">Shorten URL</button>
+        </form>
+        <div id="result" class="hidden">
+            <h2>Shortened URL:</h2>
+            <a id="shortenedUrl" href="" target="_blank"></a>
+        </div>
+    </div>
+    <div class="footer">
+        Developed by <a href="https://github.com/pankaj846" target="_blank">Pankaj</a>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

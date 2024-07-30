@@ -23,10 +23,12 @@ public class UrlShortenerServiceImpl implements UrlShortenerService{
                 .hashString(originalUrl.concat(time.toString()), StandardCharsets.UTF_8)
                 .toString();
 
+        System.out.println("saving to DB....");
         // save to DB
         Url url = new Url(originalUrl, shortUrl, time);
         saveUrl(url);
 
+        System.out.println(url.getShortUrl());
         return url;
     }
 
