@@ -2,6 +2,12 @@ document.getElementById('urlForm').addEventListener('submit', function(event) {
     event.preventDefault();
 
     const originalUrl = document.getElementById('originalUrl').value;
+    const loadingSpinner = document.getElementById('loadingSpinner');
+    const result = document.getElementById('result');
+    
+    // Show loading spinner and hide result
+    loadingSpinner.classList.remove('hidden');
+    result.classList.add('hidden');
 
     fetch('https://url-shortener-pankaj.onrender.com/shorten', {
         method: 'POST',
@@ -13,7 +19,7 @@ document.getElementById('urlForm').addEventListener('submit', function(event) {
     .then(response => response.json())
     .then(data => {
         const shortenedUrl = "https://url-shortener-pankaj.onrender.com/" + data.shortUrl;
-        document.getElementById('result').classList.remove('hidden');
+        result.classList.remove('hidden');
         const shortenedUrlElement = document.getElementById('shortenedUrl');
         shortenedUrlElement.textContent = shortenedUrl;
         shortenedUrlElement.href = shortenedUrl;
@@ -21,5 +27,9 @@ document.getElementById('urlForm').addEventListener('submit', function(event) {
     })
     .catch(error => {
         console.error('Error:', error);
+    })
+    .finally(() => {
+        // Hide loading spinner
+        loadingSpinner.classList.add('hidden');
     });
 });
