@@ -62,6 +62,8 @@ build
 !/**/src/**/bin
 !/**/src/**/build
 build.log
+*.log
+*.gz
 dependency-reduced-pom.xml
 dump.rdb
 interpolated*.xml
